@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HondaFinder
 {
-	public static class VehicalDB
+	public static class VehicleDB
 	{
 		/// <summary>
 		/// adds a Vehical Object to the dataBase
