@@ -41,46 +41,110 @@ namespace HondaFinder
             return context.Vehicles.Find(id);
         }
 
-        public static List<Vehicle> GetVehiclesByModel(string model)
+        public static List<Vehicle> GetBySearchWindowParameters(string model, int? year, int? mileage, string condition, 
+                                                                double? priceMin, double? priceMax, string color)
         {
             HondaDBContext context = new HondaDBContext();
 
-            List<Vehicle> vehicles = (from v in context.Vehicles
+            
+            if(model != null)
+            {
+                var vehicles = (from v in context.Vehicles
+                                where v.Model == model
+                                select v);
+            if(year != null)
+            {
+                vehicles = GetVehiclesByYear(Convert.ToInt32(year));
+            }
+
+            if(mileage != null)
+            {
+                vehicles = GetVehiclesByMileage(Convert.ToInt32(mileage));
+            }
+
+            if(condition != null)
+            {
+                vehicles = GetVehiclesByCondition(condition);
+            }
+
+            if(priceMin != null)
+            {
+                vehicles = GetVehiclesByPrice(Convert.ToDouble(priceMin), Convert.ToDouble(priceMax));
+            }
+
+            if(color != null)
+            {
+                vehicles = GetVehiclesByColor(color);
+            }
+
+                return vehicles.ToList();
+
+            }
+                return new List<Vehicle>();
+        }
+
+        private static IQueryable<Vehicle> GetVehiclesByColor(string color)
+        {
+            HondaDBContext context = new HondaDBContext();
+
+            var vehicles = (from v in context.Vehicles
+                            where v.Color == color
+                            select v);
+
+            return vehicles;
+        }
+
+        private static IQueryable<Vehicle> GetVehiclesByCondition(string condition)
+        {
+            HondaDBContext context = new HondaDBContext();
+
+            var vehicles = (from v in context.Vehicles
+                            where v.Condition == condition
+                            select v);
+
+            return vehicles;
+        }
+
+        public static IQueryable<Vehicle> GetVehiclesByModel(string model)
+        {
+            HondaDBContext context = new HondaDBContext();
+
+            var vehicles = (from v in context.Vehicles
                          where v.Model == model
-                         select v).ToList();
+                         select v);
 
             return vehicles;
         }
 
-        public static List<Vehicle> GetVehiclesByYear(int year)
+        public static IQueryable<Vehicle> GetVehiclesByYear(int year)
         {
             HondaDBContext context = new HondaDBContext();
 
-            List<Vehicle> vehicles = (from v in context.Vehicles
+            var vehicles = (from v in context.Vehicles
                                       where v.Year == year
-                                      select v).ToList();
+                                      select v);
 
             return vehicles;
         }
 
-        public static List<Vehicle> GetVehiclesByPrice(double lowPrice, double highPrice)
+        public static IQueryable<Vehicle> GetVehiclesByPrice(double lowPrice, double highPrice)
         {
             HondaDBContext context = new HondaDBContext();
 
-            List<Vehicle> vehicles = (from v in context.Vehicles
+            var vehicles = (from v in context.Vehicles
                                       where v.Price <= highPrice && v.Price >= lowPrice
-                                      select v).ToList();
+                                      select v);
 
             return vehicles;
         }
 
-        public static List<Vehicle> GetVehiclesByMileage(int mileage)
+        public static IQueryable<Vehicle> GetVehiclesByMileage(int mileage)
         {
             HondaDBContext context = new HondaDBContext();
 
-            List<Vehicle> vehicles = (from v in context.Vehicles
+            var vehicles = (from v in context.Vehicles
                                       where v.Mileage < mileage
-                                      select v).ToList();
+                                      select v);
 
             return vehicles;
         }
