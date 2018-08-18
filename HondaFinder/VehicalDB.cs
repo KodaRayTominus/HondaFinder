@@ -1,6 +1,7 @@
 ﻿using HondaFinder.entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,7 +15,7 @@ namespace HondaFinder
 		/// adds a Vehical Object to the dataBase
 		/// </summary>
 		/// <param name="v"></param>
-		public static void AddVehical(Vehicle v)
+		public static void AddVehicle(Vehicle v)
 		{
 			//creates db context
 			HondaDBContext context = new HondaDBContext();
@@ -67,7 +68,7 @@ namespace HondaFinder
             HondaDBContext context = new HondaDBContext();
 
             List<Vehicle> vehicles = (from v in context.Vehicles
-                                      where v.Price <= highPrice & v.Price >= lowPrice
+                                      where v.Price <= highPrice && v.Price >= lowPrice
                                       select v).ToList();
 
             return vehicles;
@@ -82,6 +83,18 @@ namespace HondaFinder
                                       select v).ToList();
 
             return vehicles;
+        }
+
+        public static void Update(Vehicle v)
+        {
+            HondaDBContext context = new HondaDBContext();
+
+            //tell EF this product has only been modified
+            //its already in the db
+            context.Entry(v).State = EntityState.Modified;
+
+            //sends update query to the database
+            context.SaveChanges();
         }
     }
 }
