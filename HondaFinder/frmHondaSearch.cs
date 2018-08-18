@@ -81,7 +81,7 @@ namespace HondaFinder
 		/// <param name="e"></param>
 		private void btnViewAllHondas_Click(object sender, EventArgs e)
 		{
-			List<Vehicle> hondas = VehicalDB.GetAllVehicles();
+			List<Vehicle> hondas = VehicleDB.GetAllVehicles();
 
 			foreach(Vehicle v in hondas)
 			{

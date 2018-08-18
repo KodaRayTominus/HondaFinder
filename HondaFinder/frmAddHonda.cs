@@ -176,7 +176,7 @@ namespace HondaFinder
 				v.Price = Convert.ToDouble(txtPrice.Text);
 				v.Color = txtColor.Text;
 				
-				VehicalDB.AddVehicle(v);
+				VehicleDB.AddVehicle(v);
 				///////////////////////////ADD Vehicle to database!!!!!!! HERE!!!!
 				MessageBox.Show("Vehical added");
 				CleanForm();
