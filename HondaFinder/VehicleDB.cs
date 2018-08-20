@@ -30,9 +30,9 @@ namespace HondaFinder
         /// Gets all vehicles and returns them as a list
         /// </summary>
         /// <returns>List of all vehices in database</returns>
-        public static IQueryable<Vehicle> GetAllVehicles()
+        public static IQueryable<Vehicle> GetAllVehicles(HondaDBContext context)
         {
-            HondaDBContext context = new HondaDBContext();
+            //HondaDBContext context = new HondaDBContext();
 
             return context.Vehicles
                             .OrderBy(c => c.Model);
